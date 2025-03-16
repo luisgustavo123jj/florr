@@ -1,0 +1,424 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #b19cd9, #f8bbd0);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  color: #ff1493;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  animation: heartbeat 1.5s infinite alternate;
+}
+
+.flower-container {
+  position: relative;
+  width: 300px;
+  height: 450px;
+  margin: 0 auto 30px;
+  animation: appear 3s ease-out forwards;
+}
+
+/* Pétalos */
+.petals-container {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  top: 0px; /* Ajustado de 50px a 0px */
+  left: 50%;
+  transform: translateX(-50%);
+  animation: growFlower 4s ease-out forwards;
+}
+
+.petal {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: #ff69b4;
+  border-radius: 60% 60% 60% 60% / 60% 60% 40% 40%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: showPetal 3s forwards, grow 4s infinite alternate ease-in-out;
+}
+
+/* Posiciones ajustadas para pétalos más juntos */
+.petal-1 {
+  top: -20px;
+  left: 50px;
+  transform: rotate(0deg);
+  animation-delay: 0.1s;
+}
+
+.petal-2 {
+  top: 5px;
+  right: 5px;
+  transform: rotate(45deg);
+  animation-delay: 0.2s;
+}
+
+.petal-3 {
+  top: 50px;
+  right: -20px;
+  transform: rotate(90deg);
+  animation-delay: 0.3s;
+}
+
+.petal-4 {
+  bottom: 5px;
+  right: 5px;
+  transform: rotate(135deg);
+  animation-delay: 0.4s;
+}
+
+.petal-5 {
+  bottom: -20px;
+  left: 50px;
+  transform: rotate(180deg);
+  animation-delay: 0.5s;
+}
+
+.petal-6 {
+  bottom: 5px;
+  left: 5px;
+  transform: rotate(225deg);
+  animation-delay: 0.6s;
+}
+
+.petal-7 {
+  top: 50px;
+  left: -20px;
+  transform: rotate(270deg);
+  animation-delay: 0.7s;
+}
+
+.petal-8 {
+  top: 5px;
+  left: 5px;
+  transform: rotate(315deg);
+  animation-delay: 0.8s;
+}
+
+/* Centro de la flor */
+.center {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 55px; /* Ajustado de 105px a 55px */
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background-color: #ffcc00;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+  animation: growCenter 2s 1s forwards, pulse 3s 3s infinite alternate;
+}
+
+/* Tallo */
+.stem {
+  position: absolute;
+  width: 15px;
+  height: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50;
+  border-radius: 10px;
+  z-index: 0;
+  animation: growStem 2s ease-out forwards;
+}
+
+/* Hojas */
+.leaf {
+  position: absolute;
+  width: 0;
+  height: 0;
+  background-color: #4caf50;
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0;
+}
+
+.leaf-left {
+  bottom: 100px;
+  left: 70px;
+  transform: rotate(-30deg);
+  animation: growLeaf 2s 2s forwards;
+}
+
+.leaf-right {
+  bottom: 150px;
+  right: 70px;
+  transform: rotate(30deg);
+  animation: growLeaf 2s 2.2s forwards;
+}
+
+/* Carta */
+.card-container {
+  width: 300px;
+  height: 0;
+  margin: 0 auto 30px;
+  perspective: 1000px;
+  visibility: hidden;
+  animation: showCard 1s 4s forwards;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.card-front {
+  background: linear-gradient(145deg, #fff, #f0f0f0);
+  border: 2px solid #ff1493;
+}
+
+.card-back {
+  background: linear-gradient(145deg, #fff, #f8bbd0);
+  transform: rotateY(180deg);
+  overflow-y: auto; /* Permite scroll vertical */
+  padding: 30px; /* Aumentado el padding */
+  text-align: left; /* Alineado a la izquierda */
+}
+
+.heart {
+  width: 50px;
+  height: 50px;
+  background-color: #ff1493;
+  position: relative;
+  transform: rotate(-45deg);
+  margin-bottom: 20px;
+  animation: heartbeat 1.5s infinite;
+}
+
+.heart:before, .heart:after {
+  content: '';
+  width: 50px;
+  height: 50px;
+  background-color: #ff1493;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.heart:before {
+  top: -25px;
+  left: 0;
+}
+
+.heart:after {
+  top: 0;
+  left: 25px;
+}
+
+.card-front p {
+  color: #ff1493;
+  font-weight: bold;
+  margin-top: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-back h2 {
+  color: #ff1493;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  align-self: flex-start; /* Alineado a la izquierda */
+}
+
+.message-text {
+  color: #333;
+  line-height: 1.6;
+  text-align: left;
+  font-size: 14px; /* Tamaño de texto ajustado */
+  max-height: 320px; /* Altura máxima con scroll */
+  overflow-y: auto; /* Habilitar scroll si es necesario */
+  width: 100%; /* Ocupar todo el ancho disponible */
+}
+
+/* Controles */
+.controls {
+  margin-top: 20px;
+  opacity: 0;
+  animation: fadeIn 1s 5s forwards;
+}
+
+.controls button {
+  padding: 10px 15px;
+  margin: 0 10px;
+  background-color: #ff1493;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.controls button:hover {
+  background-color: #ff69b4;
+  transform: scale(1.05);
+}
+
+/* Animaciones */
+@keyframes growFlower {
+  0% {
+      transform: translateX(-50%) scale(0.2);
+  }
+  100% {
+      transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes showPetal {
+  0% {
+      opacity: 0;
+      transform: scale(0);
+  }
+  100% {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+@keyframes growCenter {
+  0% {
+      transform: translateX(-50%) scale(0);
+  }
+  100% {
+      transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes growStem {
+  0% {
+      height: 0;
+  }
+  100% {
+      height: 200px;
+  }
+}
+
+@keyframes growLeaf {
+  0% {
+      width: 0;
+      height: 0;
+      opacity: 0;
+  }
+  100% {
+      width: 70px;
+      height: 35px;
+      opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+      transform: translateX(-50%) scale(1);
+  }
+  100% {
+      transform: translateX(-50%) scale(1.2);
+  }
+}
+
+@keyframes grow {
+  0% {
+      transform: scale(1);
+  }
+  100% {
+      transform: scale(1.15);
+  }
+}
+
+@keyframes heartbeat {
+  0% {
+      transform: scale(1) rotate(-45deg);
+  }
+  25% {
+      transform: scale(1.1) rotate(-45deg);
+  }
+  50% {
+      transform: scale(1) rotate(-45deg);
+  }
+  75% {
+      transform: scale(1.1) rotate(-45deg);
+  }
+  100% {
+      transform: scale(1) rotate(-45deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+@keyframes appear {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+@keyframes showCard {
+  0% {
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+  }
+  100% {
+      height: 450px; /* Aumentado de 400px a 450px */
+      opacity: 1;
+      visibility: visible;
+  }
+}
+
+/* Clase para aplicar con JavaScript cuando se pause la animación */
+.paused {
+  animation-play-state: paused;
+}
